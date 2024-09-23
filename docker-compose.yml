@@ -1,0 +1,51 @@
+version: '3.8'
+services:
+  frontend-nextjs:
+    build:
+      context: ./frontend-nextjs
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend-nestjs:3005
+    depends_on:
+      - backend-nestjs
+    networks:
+      - custom-network
+
+  backend-nestjs:
+    build:
+      context: ./backend-nestjs
+      dockerfile: Dockerfile
+    ports:
+      - "3005:3005"
+    environment:
+      - DATABASE_URL=postgresql://udemy:udemy@db-postgresql:5432/udemy
+    depends_on:
+      - db-postgresql
+    networks:
+      - custom-network
+
+  db-postgresql:
+    build:
+      context: ./backend-nestjs
+      dockerfile: Dockerfile-db
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_USER: udemy
+      POSTGRES_PASSWORD: udemy
+      POSTGRES_DB: udemy
+    restart: always
+    networks:
+      - custom-network
+
+networks:
+  custom-network:
+
+# docker-compose build
+# docker-compose up -d
+# docker-compose down
+# docker-compose ps
+# docker-compose logs <service_name>
+# docker-compose exec <service_name> sh

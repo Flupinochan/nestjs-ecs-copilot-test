@@ -1,0 +1,30 @@
+# PostgreSQLのイメージを使用
+FROM postgres:14.13-alpine
+
+# 環境変数を設定
+ENV POSTGRES_USER=udemy
+ENV POSTGRES_PASSWORD=udemy
+ENV POSTGRES_DB=udemy
+
+# init.sqlをコンテナ内にコピー(init.sqlはコンテナ起動時に実行されテーブル等を作成するSQL文を記載する)
+# COPY init.sql /docker-entrypoint-initdb.d/
+COPY ./prisma/migrations/20240923104928_prod/migration.sql /docker-entrypoint-initdb.d/
+
+# ポートを公開
+EXPOSE 5432
+
+# docker build -t db-postgresql -f Dockerfile-db .
+# docker run -d --name db-postgresql -p 5432:5432 db-postgresql
+
+# 全てのコンテナを停止
+# docker stop $(docker ps -aq)
+# 全てのコンテナを削除
+# docker rm $(docker ps -aq)
+# 全てのイメージを削除
+# docker rmi $(docker images -q)
+# コンテナに接続
+# docker exec -it db-postgresql psql -U udemy -d udemy
+# テーブル一覧を表示
+# \dt
+# テーブルにクエリする(大文字で""で囲むこと)
+# SELECT * FROM "Task";
