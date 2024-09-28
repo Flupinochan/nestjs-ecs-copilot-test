@@ -10,18 +10,14 @@ type: Load Balanced Web Service
 http:
   # Requests to this path will be forwarded to your service.
   # To match all requests you can use the "/" path.
-  # You can specify a custom health check path. The default is "/".
-  # 先にFrontendを作成してからBackendを作成する(同じALBを使用するためで、Backendでhosted_zoneを設定すると重複してエラーになるため)
-  alias: next-nest-app.metalmental.net
-  hosted_zone: Z057146116IR75PLD6YV1
-  redirect_to_https: true
   path: '/'
+  # You can specify a custom health check path. The default is "/".
   # healthcheck: '/'
 
 # Configuration for your containers and service.
 image:
   # Docker build arguments. For additional overrides: https://aws.github.io/copilot-cli/docs/manifest/lb-web-service/#image-build
-  build: ..\frontend-nextjs\Dockerfile
+  build: frontend-nextjs\Dockerfile
   # Port exposed through your container to route traffic to it.
   port: 3000
 

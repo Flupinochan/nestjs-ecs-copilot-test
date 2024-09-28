@@ -8,7 +8,7 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   // @Get()内でパス指定可能2
-  @Get('hellor')
+  @Get('hello')
   getHello(): string {
     // thisは、AppControllerのインスタンスを指す
     return this.appService.getHello();

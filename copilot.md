@@ -11,7 +11,12 @@ Windowsの場合は、「C:\Program Files」にインストールされるので
 CloudFormationでリソースが作成されるため、作成されたリソースはCloudFormationで確認可能<br>
 `※注意`: Dockerfileなどのパスを指定する際は、「manifest.yaml」空の相対パスではなく、「infra-ecs-copilot-cli」などのトップディレクトリからの相対パスで指定すること!!
 ```bash
-# Dockerは起動しておくこと
+# ★★★Dockerは起動しておくこと★★★
+# ★★★Service名は、CloudMap(Service Connect)に登録されて、サービス名でコンテナ間通信が可能★★★
+# .envとbackendのcorsのoriginを変更すること
+# ★★★ECS Copilotでは、1つのALBに複数のECS Serviceがデプロイされるため、パスを意識する必要がある
+# パスの書き換えはできないため、backendのECS Serviceのルートパスは、ECS Service名と一致させるなどにして、frontendの/と分けておくこと
+# ALBは80や443でアクセスするとをターゲットのECSに3000や3005でルーティングしてくれる
 
 copilot version
 
